@@ -1,5 +1,5 @@
-Link demo: https://cart-mindx-project.netlify.app/
-Requirement:
+* Link demo: https://cart-mindx-project.netlify.app/
+* Requirement:
 
 ```
 products: [
