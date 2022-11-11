@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const ProductDetail = () => {
+const ProductDetail = (props) => {
+  const { selectedProduct } = props;
   return (
-    <div>ProductDetail</div>
-  )
-}
+    <div>
+      <p>{selectedProduct?.name}</p>
+      <img src={selectedProduct?.img} />
+    </div>
+  );
+};
 
-export default ProductDetail
+export default ProductDetail;
