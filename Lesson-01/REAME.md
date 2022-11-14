@@ -7,3 +7,5 @@
 - assignment
 
 - hoisting
+
+CLI - command line interface - tham số dong lênh

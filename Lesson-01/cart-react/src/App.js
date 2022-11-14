@@ -1,83 +1,24 @@
-import { useState, useEffect } from "react";
 import "./App.css";
-import Cart from "./components/Cart/Cart";
+
 import Header from "./components/Header/Header";
-import ProductDetail from "./components/ProductDetail/ProductDetail";
-import ProductList from "./components/ProductList/ProductList";
-const initialProduct = [
-  {
-    id: 1,
-    name: "Samsung Galaxy A10",
-    price: "40906000",
-    img: "images/samsung-galaxy.jpg",
-    info: {
-      screen: "AMOLED Full HD 9.0",
-      os: "Android 9.0",
-      frontCamera: "20MP",
-      backCamera: "Chính 48MB, phụ 30MP",
-    },
-    ram: "4 GB",
-    rom: "64 GB",
-  },
-  {
-    id: 2,
-    name: "IPhone12",
-    price: "200306000",
-    img: "images/iphone-12.jpg",
-    info: {
-      screen: "Full HD 12.0",
-      os: "IOS 14",
-      frontCamera: "20MP",
-      backCamera: "Chính 100MB, phụ 30MP",
-    },
-    ram: "16 GB",
-    rom: "32 GB",
-  },
-  {
-    id: 3,
-    name: "Xiaomi Note 10",
-    price: "10005000",
-    img: "images/xiaomi-redmi-note-10-5g.jpg",
-    info: {
-      screen: "OLED 10.0",
-      os: "Android 8.0",
-      frontCamera: "69MP",
-      backCamera: "Chính 96MB, phụ 30MP",
-    },
-    ram: "10 GB",
-    rom: "64 GB",
-  },
-];
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import CartPage from "./pages/CartPage/CartPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import CartState from "./context/cart/CartState";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  // Get products from server
-  useEffect(() => {
-    setProducts(initialProduct);
-  }, []);
-
-  const onViewProductDetail = (id) => {
-    //Logic
-    console.log("Id:", id);
-
-    // Tim cai san pham ma co id ton tai tron products
-    const selectedProduct = products.find((product) => product.id === id);
-    setSelectedProduct(selectedProduct);
-  };
-
   return (
-    <div className="container">
-      <Header />
-      <Cart />
-      <ProductList
-        products={products}
-        onViewProductDetail={onViewProductDetail}
-      />
-      <ProductDetail selectedProduct={selectedProduct} />
-    </div>
+    <Router>
+      <CartState>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </CartState>
+    </Router>
   );
 }
 
@@ -110,4 +51,9 @@ export default App;
       - Event onClick on button View Detail
       - function onViewDetailHandler => button View Detail Product component
       - onViewDetailHandler => id => object select => pass props => Product Details
+
+      / => Homepage
+      /cart => Cartpage
+
+      hooks: useNavigate()
 */

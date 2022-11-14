@@ -13,15 +13,12 @@ const ProductList = (props) => {
     >
       {products &&
         products.map((productItem, index) => {
-          const { name, img, price, id } = productItem;
+          const { name, id } = productItem;
           const key = `${index}-${name}-${id}`;
           return (
             <Product
               onViewProductDetail={onViewProductDetail}
-              title={name}
-              img={img}
-              price={price}
-              id={id}
+              product={productItem}
               key={key}
             />
           );
