@@ -13,6 +13,15 @@ const reducer = (state, action) => {
         ...state,
         cart: newCart,
       };
+    case "PLUS_QUANTITY":
+      ///Logic code
+      return { ...state };
+    case "MINUS_QUANTITY":
+      ///Logic code
+      return { ...state };
+    case "DELETE_CART_ITEM":
+      ///Logic code
+      return { ...state };
 
     default:
       return state;

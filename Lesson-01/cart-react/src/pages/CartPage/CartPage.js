@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import CartContext from "../../context/cart/CartContext";
+import { AiOutlineDelete } from "react-icons/ai";
 
 import "./CartPage.css";
 const Cart = (props) => {
@@ -27,6 +28,11 @@ const Cart = (props) => {
             <button className="btn btn-primary">+</button>
           </td>
           <td>{quantity * Number(price)}</td>
+          <td>
+            <button className="btn btn-danger rounded-circle">
+              <AiOutlineDelete />
+            </button>
+          </td>
         </tr>
       );
     });
@@ -43,6 +49,7 @@ const Cart = (props) => {
               <th scope="col">Image</th>
               <th scope="col">Quantity</th>
               <th scope="col">Price</th>
+              <th scope="col">...</th>
             </tr>
           </thead>
           <tbody>{cartBody}</tbody>

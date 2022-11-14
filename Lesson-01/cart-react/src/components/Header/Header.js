@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import CartContext from "../../context/cart/CartContext";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
   const cartCtx = useContext(CartContext);
@@ -39,7 +40,10 @@ const Header = () => {
             </ul>
             <div className="cart">
               <Link to="/cart">
-                <span>Cart ({numOfCart})</span>
+                <div>
+                  <AiOutlineShoppingCart />
+                  <span className="ms-2">Cart ({numOfCart})</span>
+                </div>
               </Link>
             </div>
           </div>
