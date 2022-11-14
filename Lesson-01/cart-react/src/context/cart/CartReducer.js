@@ -3,25 +3,34 @@ const reducer = (state, action) => {
 
   switch (type) {
     case "ADD_TO_CART":
-      //logic
-      //Case 1: Nếu sản phẩm đã tồn tại trong giỏ hàng => cập nhật quantity (+1 quantity)
+      let newCart = [];
 
-      //Case 2: Sản phẩm chưa tồn tại
-      const newCartItem = { ...payload, quantity: 1 };
-      const newCart = [...state.cart, newCartItem];
+      const searchItemIndex = state.cart.findIndex(
+        (cartItem) => cartItem.id === payload.id
+      );
+
+      if (searchItemIndex === -1) {
+        const newCartItem = { ...payload, quantity: 1 };
+        newCart = [...state.cart, newCartItem];
+      } else {
+        newCart = [...state.cart];
+        newCart[searchItemIndex].quantity += 1;
+      }
+
       return {
         ...state,
         cart: newCart,
       };
-    case "PLUS_QUANTITY":
+    case "INCREASE_QUANTITY":
       ///Logic code
       return { ...state };
-    case "MINUS_QUANTITY":
+    case "DECREASE_QUANTITY":
       ///Logic code
       return { ...state };
     case "DELETE_CART_ITEM":
-      ///Logic code
-      return { ...state };
+      const remainCart = state.cart.filter((cart) => cart.id !== payload.id);
+
+      return { ...state, cart: remainCart };
 
     default:
       return state;

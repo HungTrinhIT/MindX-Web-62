@@ -7,10 +7,22 @@ const Cart = (props) => {
   const { state, dispatch } = useContext(CartContext);
   const { cart } = state;
 
+  const onDeleteCartItem = (id) => {
+    const action = {
+      type: "DELETE_CART_ITEM",
+      payload: { id },
+    };
+
+    dispatch(action);
+  };
+
+  const onDecreaseCart = (id) => {};
+  const onIncreaseCart = (id) => {};
+
   const cartBody =
     cart &&
     cart.map((cartItem, index) => {
-      const { name, price, img, quantity } = cartItem;
+      const { name, price, img, quantity, id } = cartItem;
       return (
         <tr>
           <th scope="row">1</th>
@@ -23,13 +35,26 @@ const Cart = (props) => {
             />
           </td>
           <td className="d-flex">
-            <button className="btn btn-primary">-</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => onIncreaseCart(id)}
+            >
+              -
+            </button>
             <span className="mx-2">{quantity}</span>
-            <button className="btn btn-primary">+</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => onDecreaseCart(id)}
+            >
+              +
+            </button>
           </td>
           <td>{quantity * Number(price)}</td>
           <td>
-            <button className="btn btn-danger rounded-circle">
+            <button
+              className="btn btn-danger rounded-circle"
+              onClick={() => onDeleteCartItem(id)}
+            >
               <AiOutlineDelete />
             </button>
           </td>
