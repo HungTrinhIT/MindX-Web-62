@@ -4,7 +4,6 @@ const reducer = (state, action) => {
   switch (type) {
     case "ADD_TO_CART":
       let newCart = [];
-
       const searchItemIndex = state.cart.findIndex(
         (cartItem) => cartItem.id === payload.id
       );
