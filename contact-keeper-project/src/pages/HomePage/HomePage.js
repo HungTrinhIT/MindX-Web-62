@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ContactContext from "../../contexts/ContactContext/ContactContext";
 import ContactForm from "../../components/ContactForm/ContactForm";
+import PageContainer from "../../components/PageContainer/PageContainer";
+import useViewport from "../../hooks/useViewport";
+import useFetchMovies from "../../hooks/useFetchMovies";
 const contactData = [
   {
     id: 1,
@@ -27,6 +30,8 @@ const contactData = [
 
 const HomePage = () => {
   const [contacts, setContacts] = useState([]);
+  const { movies, loading, error } = useFetchMovies();
+  const { isMobile } = useViewport();
 
   useEffect(() => {
     setContacts(contactData);
@@ -35,7 +40,10 @@ const HomePage = () => {
     setContacts((prev) => [...prev, contact]);
   };
   return (
-    <div className="container mt-4">
+    <PageContainer
+      title="Contact Keeper | Help you to keep all contacts"
+      description="Easy to use | The best app of the world"
+    >
       <ContactContext.Provider
         value={{
           contacts,
@@ -48,7 +56,7 @@ const HomePage = () => {
           <div className="col-12 col-md-6"></div>
         </div>
       </ContactContext.Provider>
-    </div>
+    </PageContainer>
   );
 };
 
