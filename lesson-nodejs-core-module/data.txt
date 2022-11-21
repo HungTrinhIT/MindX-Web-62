@@ -1,0 +1,4 @@
+id,name,score
+1,hung,1,
+2,hao,10
+3,anh,9
