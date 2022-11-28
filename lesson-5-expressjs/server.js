@@ -3,13 +3,13 @@ const contactRouter = require("./routes/contacts");
 const userRouter = require("./routes/users");
 
 const checkAdminMiddleware = require("./middlewares/checkAdmin");
-
+const logMiddleware = require("./middlewares/log");
 const app = express();
 const PORT = 3001;
 
 // Middlewares
 app.use(express.json());
-
+app.use(logMiddleware);
 app.use("/contacts", contactRouter);
 app.use("/users", userRouter);
 
