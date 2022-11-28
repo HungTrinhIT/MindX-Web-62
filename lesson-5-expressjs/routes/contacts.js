@@ -2,7 +2,7 @@ const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 
-const contacts = [
+let contacts = [
   {
     id: "a8fa5bee-cb01-4fb0-8465-e8b820567000",
     name: "Jill Johnson",
@@ -79,16 +79,67 @@ router.post("/", (req, res) => {
   };
   contacts.push(newContact);
 
-  res.json({
+  res.status(201).json({
     msg: "Add new contact successfully",
     data: contacts,
   });
 });
 
 // PUT: update a contact
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, email, phone, type } = req.body;
+
+  //1. Check is exist id?
+  const contactIdx = contacts.findIndex((contact) => contact.id === id);
+  if (contactIdx === -1) {
+    return res.json({
+      msg: "Can not find this resource",
+      statusCode: 400,
+    });
+  }
+
+  //2. Validation
+  if (!name || !email || !phone || !type) {
+    return res.json({
+      msg: "Missing required keys",
+      statusCode: 400,
+    });
+  }
+
+  contacts[contactIdx] = {
+    id,
+    name,
+    email,
+    phone,
+    type,
+  };
+
+  res.json({
+    data: contacts,
+    msg: "Successfully",
+  });
+});
 
 // DELETE: delete a contact
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  //1. Check is exist id?
+  const contactIdx = contacts.findIndex((contact) => contact.id === id);
+  if (contactIdx === -1) {
+    return res.json({
+      msg: "Can not find this resource",
+      statusCode: 400,
+    });
+  }
+
+  const deletedContacts = contacts.filter((contact) => contact.id !== id);
+  contacts = deletedContacts;
+
+  res.json({
+    msg: "Delete successfully",
+    data: contacts,
+  });
+});
 
 module.exports = router;
