@@ -12,3 +12,11 @@ root.render(
 );
 
 reportWebVitals();
+
+/*
+  MERN stack:
+    (M)ongo DB/(MySQL)
+    Express
+    ReactJS
+    NodeJS
+*/
