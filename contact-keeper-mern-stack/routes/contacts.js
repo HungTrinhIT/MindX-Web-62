@@ -59,7 +59,7 @@ router.post("/", (req, res) => {
 
   // 1. Validation
   if (!name || !phone || !type || !email) {
-    return res.json({
+    return res.status(400).json({
       msg: "Missing required keys",
       statusCode: 400,
     });
@@ -68,7 +68,7 @@ router.post("/", (req, res) => {
   // 2. Does this record exist in DB?
   const isExist = contacts.findIndex((contact) => contact.phone === phone);
   if (isExist !== -1) {
-    return res.json({
+    return res.status(400).json({
       msg: "Can not upload contact with this number",
       statusCode: 400,
     });
