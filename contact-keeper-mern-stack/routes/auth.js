@@ -2,6 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const router = express.Router();
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const EXPIRE_IN = process.env.JWT_EXPIRE_IN;
 
 const users = [
   {
@@ -50,15 +52,15 @@ router.post("/login", (req, res) => {
   delete existingUser.password;
   const payload = { ...existingUser };
 
-  const SERCET_KEY = process.env.JWT_SERCET_KEY;
-  console.log({SERCET_KEY})
-
-  const token = jwt.sign(payload, SERCET_KEY, {
-    expiresIn: 600000,
+  const token = jwt.sign(payload, SECRET_KEY, {
+    expiresIn: EXPIRE_IN,
   });
 
   // Response client
-  return res.json({ token });
+  return res.json({
+    isAuthenticated: true,
+    accessToken: token,
+  });
 });
 
 module.exports = router;

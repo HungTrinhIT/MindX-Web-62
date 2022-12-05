@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const logMiddleware = require("../middlewares/log");
+const authMdw = require("../middlewares/authMdw");
 const router = express.Router();
 
 let contacts = [
@@ -26,6 +26,9 @@ let contacts = [
     type: "professional",
   },
 ];
+
+//middlewares
+router.use(authMdw);
 
 // GET: get all contacts
 router.get("/", (req, res) => {
