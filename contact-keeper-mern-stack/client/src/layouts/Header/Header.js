@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { FaUser } from "react-icons/fa";
 const Header = (props) => {
   return (
     <header>
@@ -33,6 +33,12 @@ const Header = (props) => {
                 </Link>
               </li>
             </ul>
+            <div className="authentication-section">
+              <Link to="/login">
+                <span>Login</span>
+                <FaUser />
+              </Link>
+            </div>
           </div>
         </div>
       </nav>

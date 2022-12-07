@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const authMdw = require("../middlewares/authMdw");
 
 const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -25,6 +26,16 @@ const users = [
     email: "admin@gmail.com",
   },
 ];
+
+//API get user info by token
+router.get("/", authMdw, (req, res) => {
+  const { id } = req.user;
+  const existingUser = users.find((user) => user.id === id);
+  res.json({
+    data: existingUser,
+    msg: "Successfully",
+  });
+});
 
 //API Login
 router.post("/login", (req, res) => {
