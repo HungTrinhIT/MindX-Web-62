@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const authMdw = require("../middlewares/authMdw");
 
 const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -26,6 +27,14 @@ const users = [
   },
 ];
 
+// API get user by token: http://localhost:3001/api/v1/auth
+router.get("/", authMdw, (req, res) => {
+  const user = req.user;
+  res.json({
+    user,
+  });
+});
+
 //API Login
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -44,7 +53,7 @@ router.post("/login", (req, res) => {
 
   if (!existingUser) {
     return res.status(400).json({
-      msg: "User does not exist",
+      msg: "Please check your password or username again!",
     });
   }
 

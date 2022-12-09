@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { FaUserAlt } from "react-icons/fa";
+import authContext from "../../contexts/AuthContext/authContext";
 const Header = (props) => {
+  const { state } = useContext(authContext);
+  const { isAuthenticated } = state;
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,6 +36,18 @@ const Header = (props) => {
                 </Link>
               </li>
             </ul>
+            {isAuthenticated ? (
+              <p>Hello {state.user?.username}</p>
+            ) : (
+              <>
+                <div className="authentication-container">
+                  <Link to="/login">
+                    <FaUserAlt />
+                    <span className="mx-2">Log in</span>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </nav>

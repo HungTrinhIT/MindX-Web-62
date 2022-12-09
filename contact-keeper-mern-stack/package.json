@@ -18,6 +18,8 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.20",
+    "react-hook-form": "^7.40.0",
+    "react-icons": "^4.7.1",
     "uuid": "^9.0.0"
   }
 }
