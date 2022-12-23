@@ -1,31 +1,12 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const authMdw = require("../middlewares/authMdw");
+const UserModel = require("../models/User");
 
 const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRE_IN = process.env.JWT_EXPIRE_IN;
-
-const users = [
-  {
-    id: "1",
-    username: "cr7",
-    password: "cr7123",
-    email: "cr7@mu.com",
-  },
-  {
-    id: "2",
-    username: "messi",
-    password: "messi123",
-    email: "messi@paris.com",
-  },
-  {
-    id: "3",
-    username: "admin",
-    password: "admin123",
-    email: "admin@gmail.com",
-  },
-];
 
 // API get user by token: http://localhost:3001/api/v1/auth
 router.get("/", authMdw, (req, res) => {
@@ -36,7 +17,7 @@ router.get("/", authMdw, (req, res) => {
 });
 
 //API Login
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   // Validation
@@ -47,19 +28,25 @@ router.post("/login", (req, res) => {
   }
 
   // Check isExist user
-  const existingUser = users.find(
-    (user) => user.password === password && user.username === username
-  );
-
+  const existingUser = await UserModel.findOne({ username });
   if (!existingUser) {
     return res.status(400).json({
-      msg: "Please check your password or username again!",
+      msg: "Invalid credentials",
     });
   }
 
-  // Create token (accessToken) => JWT
-  delete existingUser.password;
-  const payload = { ...existingUser };
+  // Match password
+  const isMatchPassword = await bcrypt.compare(password, existingUser.password);
+  if (!isMatchPassword) {
+    return res.status(400).json({
+      msg: "Invalid credentials",
+    });
+  }
+
+  const payload = {
+    id: existingUser._id,
+    username: existingUser.username,
+  };
 
   const token = jwt.sign(payload, SECRET_KEY, {
     expiresIn: EXPIRE_IN,

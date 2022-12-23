@@ -2,6 +2,7 @@ const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const authMdw = require("../middlewares/authMdw");
 const router = express.Router();
+const ContactModel = require("../models/Contact");
 
 let contacts = [
   {
@@ -31,8 +32,11 @@ let contacts = [
 router.use(authMdw);
 
 // GET: get all contacts
-router.get("/", (req, res) => {
-  res.json({
+router.get("/", async (req, res) => {
+  const userId = req.user.id;
+  const contacts = await ContactModel.find({ user: userId });
+
+  return res.json({
     data: contacts,
     statusCode: 200,
   });
@@ -57,8 +61,9 @@ router.get("/:id", (req, res) => {
 });
 
 // POST: create new contact
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, phone, type, email } = req.body;
+  const userId = req.user.id;
 
   // 1. Validation
   if (!name || !phone || !type || !email) {
@@ -69,23 +74,28 @@ router.post("/", (req, res) => {
   }
 
   // 2. Does this record exist in DB?
-  const isExist = contacts.findIndex((contact) => contact.phone === phone);
-  if (isExist !== -1) {
+  const contact = await ContactModel.findOne({ phone });
+
+  if (contact) {
     return res.status(400).json({
       msg: "Can not upload contact with this number",
       statusCode: 400,
     });
   }
 
-  const newContact = {
-    ...req.body,
-    id: uuidv4(),
-  };
-  contacts.push(newContact);
+  const newContact = new ContactModel({
+    name,
+    phone,
+    type,
+    email,
+    user: userId,
+  });
+
+  const contactResponse = await newContact.save();
 
   res.status(201).json({
     msg: "Add new contact successfully",
-    data: contacts,
+    data: contactResponse,
   });
 });
 

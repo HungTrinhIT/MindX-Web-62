@@ -8,8 +8,12 @@ const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 
 const logMiddleware = require("./middlewares/log");
+const { connectToDB } = require("./config/db");
 const app = express();
 const PORT = 3001;
+
+// Connect to database
+connectToDB();
 
 // Middlewares
 app.use(cors("*"));
