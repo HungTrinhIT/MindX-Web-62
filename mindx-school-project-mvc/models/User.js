@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -10,6 +10,9 @@ const UserSchema = mongoose.Schema({
       },
       message: (props) => `${props.value} need 6 characters`,
     },
+  },
+  avatar: {
+    type: String,
   },
   password: {
     type: String,
@@ -33,7 +36,7 @@ const UserSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'student',
+    default: "student",
   },
   createdAt: {
     type: Date,
@@ -41,4 +44,4 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model("user", UserSchema);

@@ -1,40 +1,33 @@
-const express = require('express');
-const {
-  fetchAllStudents,
-  fetchStudent,
-  createStudent,
-  updateStudent,
-  deleteStudent,
-  login,
-} = require('../controllers/studentsController');
-const { authMdw, adminMdw } = require('../middlewares/authMdw');
+const express = require("express");
+const StudentController = require("../controllers/studentsController");
+const { authMdw, adminMdw } = require("../middlewares/authMdw");
 const router = express.Router();
 
 // @route     GET /api/v1/students
 // @desc      Get all students
-// @access    Public
-router.get('/', adminMdw, fetchAllStudents);
+// @access    admin
+router.get("/", adminMdw, StudentController.fetchAllStudents);
 
 // @route     GET /api/v1/students/:id
 // @desc      Get a student by id
-// @access    Public
-router.get('/:id', authMdw, fetchStudent);
+// @access    admin
+router.get("/:id", authMdw, StudentController.fetchStudent);
 
 // @route     POST /api/v1/students
 // @desc      Create new student
 // @access    Public
-router.post('/', createStudent);
+router.post("/", StudentController.createStudent);
 
 // @route     PUT /api/v1/students
 // @desc      Update a student by id
 // @access    Public
-router.put('/:id', authMdw, updateStudent);
+router.put("/:id", authMdw, StudentController.updateStudent);
 
 // @route     DELETE /api/v1/students
 // @desc      Delete a student by id
 // @access    Public
-router.delete('/:id', adminMdw, deleteStudent);
+router.delete("/:id", adminMdw, StudentController.deleteStudent);
 
-router.post('/login', login);
+router.post("/login", StudentController.login);
 
 module.exports = router;
