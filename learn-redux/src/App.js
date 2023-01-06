@@ -1,13 +1,9 @@
-import ContextWithReducer from './components/ContextWithReducer';
-import ContextWithState from './components/ContextWithState';
-import ExampleUseState from './components/ExampleUseState';
+import TodoList from './features/TodoList';
 
 function App() {
   return (
     <div className="App">
-      <ExampleUseState />
-      <ContextWithState />
-      <ContextWithReducer />
+      <TodoList />
     </div>
   );
 }

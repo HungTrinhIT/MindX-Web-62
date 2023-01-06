@@ -1,7 +1,5 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
-const CalculatorContext = createContext();
-
 const initialState = { count: 0 };
 
 function reducer(state, action) {
@@ -14,6 +12,8 @@ function reducer(state, action) {
       return { count: 0 };
   }
 }
+
+const CalculatorContext = createContext();
 
 function ContextWithReducer() {
   const [state, dispatch] = useReducer(reducer, initialState);
