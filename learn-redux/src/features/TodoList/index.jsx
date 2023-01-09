@@ -7,8 +7,8 @@ function TodoList() {
   return (
     <div>
       <FormTodo />
-      <List />
       <TodoFilters />
+      <List />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addTodoList } from '../../../redux/actions.js/todoActions';
 
 function FormTodo() {
   const [name, setName] = useState('');
@@ -14,14 +15,13 @@ function FormTodo() {
       />
       <button
         onClick={() =>
-          dispatch({
-            type: 'todoList/addTodoList',
-            payload: {
+          dispatch(
+            addTodoList({
               index: new Date().toISOString(),
               name,
               completed: false,
-            },
-          })
+            })
+          )
         }
       >
         Add
